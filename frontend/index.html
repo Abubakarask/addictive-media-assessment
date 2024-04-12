@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Enter Your Personal Details</h1>
+      <form id="signupForm">
+        <div class="slide" id="slide1">
+          <p>First Name:</p>
+          <input
+            type="text"
+            id="signupFirstName"
+            placeholder="First Name"
+            required
+          />
+          <p>Last Name:</p>
+          <input
+            type="text"
+            id="signupLastName"
+            placeholder="Last Name"
+            required
+          />
+          <p>Enter Date of Birth:</p>
+          <div class="dob-box">
+            <div class="dob-input">
+              <input
+                type="text"
+                id="dobDay"
+                placeholder="DD"
+                maxlength="2"
+                required
+              />
+              <input
+                type="text"
+                id="dobMonth"
+                placeholder="MM"
+                maxlength="2"
+                required
+              />
+              <input
+                type="text"
+                id="dobYear"
+                placeholder="YYYY"
+                maxlength="4"
+                required
+              />
+            </div>
+          </div>
+          <button type="button" id="nextBtn">Next</button>
+        </div>
+        <div class="slide" id="slide2" style="display: none">
+          <input type="email" id="signupEmail" placeholder="Email" required />
+          <input type="tel" id="signupMobile" placeholder="Mobile" required />
+          <button type="button" id="prevBtn">Previous</button>
+          <button type="submit">Sign Up</button>
+        </div>
+      </form>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
