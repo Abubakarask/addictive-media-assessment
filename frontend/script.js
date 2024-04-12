@@ -10,13 +10,27 @@ document.getElementById("prevBtn").addEventListener("click", function () {
 
 document
   .getElementById("signupForm")
-  .addEventListener("submit", function (event) {
+  .addEventListener("submit", async (event) => {
     event.preventDefault();
-    const name = document.getElementById("signupName").value;
+
+    const firstName = document.getElementById("signupFirstName").value;
+    const lastName = document.getElementById("signupLastName").value;
+    const dobDay = document.getElementById("dobDay").value;
+    const dobMonth = document.getElementById("dobMonth").value;
+    const dobYear = document.getElementById("dobYear").value;
     const email = document.getElementById("signupEmail").value;
     const mobile = document.getElementById("signupMobile").value;
 
     // API request n all
 
-    console.log("Sign Up:", name, email, mobile);
+    console.log(
+      "Sign Up:",
+      firstName,
+      lastName,
+      dobDay,
+      dobMonth,
+      dobYear,
+      email,
+      mobile
+    );
   });
