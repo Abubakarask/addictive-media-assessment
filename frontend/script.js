@@ -52,7 +52,7 @@ document.getElementById("addAddressBtn").addEventListener("click", function () {
   document
     .getElementById("newAddresses")
     .insertAdjacentHTML("beforeend", newAddressHtml);
-  document.getElementById("removeAddressBtn").style.display = "inline-block";
+  document.getElementById("removeAddressBtn").style.display = "flex";
 });
 
 document
@@ -103,5 +103,7 @@ document
     // Resetting the form
     document.getElementById("addressForm").reset();
     document.getElementById("slide3").style.display = "none";
+    document.getElementById("main-title").innerHTML =
+      "Data Saved Successfully!";
     // You can add further logic here, such as making an API call to submit the data
   });
