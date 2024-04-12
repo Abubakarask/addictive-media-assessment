@@ -33,4 +33,75 @@ document
       email,
       mobile
     );
+
+    document.getElementById("slide2").style.display = "none";
+    document.getElementById("slide3").style.display = "block";
+  });
+
+let addressCount = 1; // Counter for tracking number of addresses
+
+document.getElementById("addAddressBtn").addEventListener("click", function () {
+  addressCount++;
+  const newAddressHtml = `
+      <div class="previous-address">
+          <p>Previous Address ${addressCount}</p>
+          <input type="text" class="addressInput" placeholder="Address Line 1" required>
+          <input type="text" class="addressInput" placeholder="Address Line 2">
+          <input type="text" class="addressInput" placeholder="Address Line 3">
+      </div>`;
+  document
+    .getElementById("newAddresses")
+    .insertAdjacentHTML("beforeend", newAddressHtml);
+  document.getElementById("removeAddressBtn").style.display = "inline-block";
+});
+
+document
+  .getElementById("removeAddressBtn")
+  .addEventListener("click", function () {
+    if (addressCount > 1) {
+      const lastAddress = document.querySelector(
+        "#newAddresses .previous-address:last-child"
+      );
+      lastAddress.parentNode.removeChild(lastAddress);
+      addressCount--;
+      if (addressCount === 1) {
+        document.getElementById("removeAddressBtn").style.display = "none";
+      }
+    }
+  });
+
+document
+  .getElementById("addressForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Collecting first name from the first slide
+    const firstName = document.getElementById("signupFirstName").value;
+
+    // Collecting addresses
+    const addresses = [];
+    document
+      .querySelectorAll(".previous-address")
+      .forEach(function (addressContainer) {
+        const address = {
+          addressLine1: addressContainer.querySelector(
+            ".addressInput:nth-of-type(1)"
+          ).value,
+          addressLine2: addressContainer.querySelector(
+            ".addressInput:nth-of-type(2)"
+          ).value,
+          addressLine3: addressContainer.querySelector(
+            ".addressInput:nth-of-type(3)"
+          ).value,
+        };
+        addresses.push(address);
+      });
+
+    console.log("First Name:", firstName);
+    console.log("Addresses:", addresses);
+
+    // Resetting the form
+    document.getElementById("addressForm").reset();
+    document.getElementById("slide3").style.display = "none";
+    // You can add further logic here, such as making an API call to submit the data
   });

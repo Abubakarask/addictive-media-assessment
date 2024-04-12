@@ -60,6 +60,39 @@
           <button type="submit">Sign Up</button>
         </div>
       </form>
+
+      <div class="slide" id="slide3" style="display: none">
+        <h1>Add Address</h1>
+        <form id="addressForm">
+          <!-- Previous Address -->
+          <div class="previous-address">
+            <p>Previous Address 1</p>
+            <input
+              type="text"
+              class="addressInput"
+              placeholder="Address Line 1"
+              required
+            />
+            <input
+              type="text"
+              class="addressInput"
+              placeholder="Address Line 2"
+            />
+            <input
+              type="text"
+              class="addressInput"
+              placeholder="Address Line 3"
+            />
+          </div>
+          <!-- New Address Fields will be added here -->
+          <div id="newAddresses"></div>
+          <button type="button" id="addAddressBtn">Add Another Address</button>
+          <button type="button" id="removeAddressBtn" style="display: none">
+            Remove Address
+          </button>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
 
     <script src="script.js"></script>
