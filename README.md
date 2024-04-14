@@ -20,7 +20,7 @@ To play the game, visit the [deployment link](https://addictive-media-assessment
 
 1. Clone this repository.
 2. Run `npm install` to install the dependencies for both the frontend and backend.
-3. Configure the necessary environment variables(access `server/config/config.env` for the backend.
+3. Configure the necessary environment variables(access `server/config/config.env`) for the backend.
 4. Install `env-cmd` using command `npm i -g env-cmd` as its being used to access env variables.
 5. Start the project with `npm run dev`.
 
