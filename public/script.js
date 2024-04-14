@@ -1,4 +1,4 @@
-const url = "http://localhost:3601/";
+const url = "https://addictive-media-assessment.onrender.com/";
 
 document.getElementById("nextBtn").addEventListener("click", function () {
   document.getElementById("slide1").style.display = "none";
