@@ -1,4 +1,8 @@
 const User = require("../model/user");
+const {
+  validatePhoneNumber,
+  validateEmailAddress,
+} = require("../utils/validation");
 
 async function createUser(req, res) {
   try {
@@ -22,6 +26,21 @@ async function createUser(req, res) {
       return res.status(400).json({
         success: false,
         message: "Phone number or email already exists",
+      });
+    }
+
+    const mobile = `+91${phoneNumber}`;
+    if (!validatePhoneNumber(mobile)) {
+      return res.status(400).json({
+        success: false,
+        message: "Phone number is invalid",
+      });
+    }
+
+    if (!validateEmailAddress(email)) {
+      return res.status(400).json({
+        success: false,
+        message: "Email address is invalid",
       });
     }
 
@@ -75,10 +94,25 @@ async function updateUser(req, res) {
 
     if (phoneNumber !== null && typeof phoneNumber !== "undefined") {
       user_record.phoneNumber = phoneNumber;
+
+      const mobile = `+91${phoneNumber}`;
+      if (!validatePhoneNumber(mobile)) {
+        return res.status(400).json({
+          success: false,
+          message: "Phone number is invalid",
+        });
+      }
     }
 
     if (email !== null && typeof email !== "undefined") {
       user_record.email = email;
+
+      if (!validateEmailAddress(email)) {
+        return res.status(400).json({
+          success: false,
+          message: "Email address is invalid",
+        });
+      }
     }
 
     if (addresses !== null && typeof addresses !== "undefined") {
