@@ -157,7 +157,7 @@ async function saveUserInteraction() {
       headers: { "Content-Type": "application/json" },
     });
 
-    if (response.status !== 200) {
+    if (response.status !== 201) {
       const result = await response.json();
       alert(result.message);
       return;
