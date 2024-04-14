@@ -4,7 +4,7 @@ const { createUser, updateUser } = require("../controllers/user");
 
 const router = new express.Router();
 
-router.post("/user-interaction", userInteractionCreate);
+router.get("/user-interaction", userInteractionCreate);
 router.post("/user/create", createUser);
 router.post("/user/update", updateUser);
 

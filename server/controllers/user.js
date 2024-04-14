@@ -35,9 +35,11 @@ async function createUser(req, res) {
     });
     await newUser.save();
 
-    res
-      .status(200)
-      .json({ success: true, message: "User details saved successfully" });
+    res.status(200).json({
+      success: true,
+      message: "User details saved successfully",
+      user: newUser,
+    });
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -46,8 +48,6 @@ async function createUser(req, res) {
 
 async function updateUser(req, res) {
   try {
-    console.log(req.body);
-
     const { id } = req.body;
     const { firstName, lastName, phoneNumber, email, dob, addresses } =
       req.body.data;
@@ -61,27 +61,27 @@ async function updateUser(req, res) {
       });
     }
 
-    if (firstName !== null && typeof firstName !== undefined) {
+    if (firstName !== null && typeof firstName !== "undefined") {
       user_record.firstName = firstName;
     }
 
-    if (lastName !== null && typeof lastName !== undefined) {
+    if (lastName !== null && typeof lastName !== "undefined") {
       user_record.lastName = lastName;
     }
 
-    if (dob !== null && typeof dob !== undefined) {
+    if (dob !== null && typeof dob !== "undefined") {
       user_record.dob = new Date(dob);
     }
 
-    if (phoneNumber !== null && typeof phoneNumber !== undefined) {
+    if (phoneNumber !== null && typeof phoneNumber !== "undefined") {
       user_record.phoneNumber = phoneNumber;
     }
 
-    if (email !== null && typeof email !== undefined) {
+    if (email !== null && typeof email !== "undefined") {
       user_record.email = email;
     }
 
-    if (addresses !== null && typeof addresses !== undefined) {
+    if (addresses !== null && typeof addresses !== "undefined") {
       const duplicateAddresses = addresses.filter((address, index) => {
         const firstIndex = addresses.findIndex((a) => a === address);
         return firstIndex !== index;
@@ -97,9 +97,12 @@ async function updateUser(req, res) {
       user_record.addresses = addresses;
     }
 
-    res
-      .status(200)
-      .json({ success: true, message: "User details saved successfully" });
+    await user_record.save();
+
+    res.status(200).json({
+      success: true,
+      message: "User details saved successfully",
+    });
   } catch (error) {
     console.error("Error:", error.message);
     res.status(500).json({ success: false, message: "Internal server error" });

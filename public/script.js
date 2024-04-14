@@ -1,3 +1,5 @@
+const url = "http://localhost:3601/";
+
 document.getElementById("nextBtn").addEventListener("click", function () {
   document.getElementById("slide1").style.display = "none";
   document.getElementById("slide2").style.display = "block";
@@ -21,21 +23,41 @@ document
     const email = document.getElementById("signupEmail").value;
     const mobile = document.getElementById("signupMobile").value;
 
-    // API request n all
+    try {
+      const response = await fetch(`${url}user/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          dob: new Date(`${dobYear}-${dobMonth}-${dobDay}`),
+          phoneNumber: mobile,
+          email,
+        }),
+      });
 
-    console.log(
-      "Sign Up:",
-      firstName,
-      lastName,
-      dobDay,
-      dobMonth,
-      dobYear,
-      email,
-      mobile
-    );
+      if (response.status === 200) {
+        const data = await response.json();
 
-    document.getElementById("slide2").style.display = "none";
-    document.getElementById("slide3").style.display = "block";
+        // store userDetails and Token in localStorage
+        window.localStorage.setItem("userData", JSON.stringify(data.user));
+
+        document.getElementById("slide2").style.display = "none";
+        document.getElementById("slide3").style.display = "block";
+
+        const userNameTitle = document.getElementById("user-name");
+        const userName = firstName + " " + lastName;
+        userNameTitle.innerHTML = `Welcome ${userName}!`;
+      } else {
+        const result = await response.json();
+        alert(result.message);
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Unable to add data.");
+      return;
+    }
   });
 
 let addressCount = 1; // Counter for tracking number of addresses
@@ -72,11 +94,8 @@ document
 
 document
   .getElementById("addressForm")
-  .addEventListener("submit", function (event) {
+  .addEventListener("submit", async function (event) {
     event.preventDefault();
-
-    // Collecting first name from the first slide
-    const firstName = document.getElementById("signupFirstName").value;
 
     // Collecting addresses
     const addresses = [];
@@ -97,13 +116,59 @@ document
         addresses.push(address);
       });
 
-    console.log("First Name:", firstName);
-    console.log("Addresses:", addresses);
+    try {
+      const userData = JSON.parse(window.localStorage.getItem("userData"));
 
-    // Resetting the form
-    document.getElementById("addressForm").reset();
-    document.getElementById("slide3").style.display = "none";
-    document.getElementById("main-title").innerHTML =
-      "Data Saved Successfully!";
-    // You can add further logic here, such as making an API call to submit the data
+      const response = await fetch(`${url}user/update`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: userData._id,
+          data: { addresses },
+        }),
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+
+        // Resetting the form
+        document.getElementById("addressForm").reset();
+        document.getElementById("slide3").style.display = "none";
+        document.getElementById("main-title").innerHTML =
+          "Data Saved Successfully!";
+      } else {
+        const result = await response.json();
+        alert(result.message);
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Unable to add data.");
+      return;
+    }
   });
+
+async function saveUserInteraction() {
+  try {
+    const userData = JSON.parse(window.localStorage.getItem("userData"));
+
+    const response = await fetch(`${url}user-interaction`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.status !== 200) {
+      const result = await response.json();
+      alert(result.message);
+      return;
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Internal Server Error");
+    return;
+  }
+}
+
+(async () => {
+  await saveUserInteraction();
+})();

@@ -14,10 +14,9 @@ async function userInteractionCreate(req, res) {
       userAgent,
     });
 
-    console.log(result);
-    res.send({ success: true, message: "Saved succesfully" });
+    res.status(201).json({ success: true, message: "Saved succesfully" });
   } catch (err) {
-    res.status(500).send({ success: false, message: "Something went wrong." });
+    res.status(500).json({ success: false, message: "Something went wrong." });
   }
 }
 
